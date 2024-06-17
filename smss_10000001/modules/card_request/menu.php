@@ -8,9 +8,10 @@ echo "<ul id='nav' class='dropdown dropdown-horizontal'>";
 	echo "<li><a href='./'>$mpic_home&nbsp;รายการหลัก</a></li>";
 	
 if($_SESSION['login_status']<=4){
-	echo "<li><a href='?option=card_request&task=main/newform' class='dir'>$mpic1 ส่งคำขอทำบัตร</a>";
+	echo "<li><a href='?option=card_request&task=main/newform' class='dir'>$mpic1 คำขอทำบัตรประจำตัว</a>";
 		echo "<ul>";
 			echo "<li><a href='?option=card_request&task=main/newform'>$mpic2 ส่งคำขอทำบัตร</a></li>";
+			echo "<li><a href='?option=card_request&task=main/request_list'>$mpic2 ตรวจสอบรายการคำขอ</a></li>";
 		echo "</ul>";
 	echo "</li>";
 }

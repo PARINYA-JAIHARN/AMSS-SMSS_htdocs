@@ -42,7 +42,7 @@
 
 <?php
 if(isset($_POST["submit"])){
-    $IDNumber = $_POST["IDNumber"];
+    $IDNumber = $_POST["IDNumber"]; 
     $prefix = $_POST["prefix"];
     $firstName = $_POST["firstName"];
     $lastName = $_POST["lastName"];
@@ -52,25 +52,42 @@ if(isset($_POST["submit"])){
     $bloodGroup = $_POST["bloodGroup"];
     $regAddress = $_POST["regAddress"];
     $regZipCode = $_POST["regZipCode"];
-    $curAddress = $_POST["curAddress"];
-    $curZipCode = $_POST["curZipCode"];
+
+    if(isset($_POST["useSameAddress"])){        // use regAddress if checkbox "useSameAddress" is checked
+        $curAddress = $_POST["regAddress"];
+        $curZipCode = $_POST["regZipCode"];
+    }else{
+        $curAddress = $_POST["curAddress"];
+        $curZipCode = $_POST["curZipCode"];
+    }
+
     $phoneNumber = $_POST["phoneNumber"];
     $email = $_POST["email"];
     $officerType = $_POST["officerType"];
-    $isInSchool = $_POST["isInSchool"];
+
+    if(isset($_POST["isInSchool"])){            // value depend on checkbox "isInSchool" is checked [1 = true, 0 = false]
+        $isInSchool = "1";
+    }else{
+        $isInSchool = "0";
+    }
+
     $schoolName = $_POST["schoolName"];
+    $workGroup = $_POST["workGroup"];
     $jobLevel = $_POST["jobLevel"];
     $reqOption = $_POST["reqOption"];
     $reqCause = $_POST["reqCause"];
 
+    // insert data
     $sql = "INSERT INTO card_request (IDNumber, prefix, firstName, lastName, dateOfBirth, 
                                 age, nationality, bloodGroup, regAddress, regZipCode, 
                                 curAddress, curZipCode, phoneNumber, email, officerType,
-                                isInSchool, schoolName, jobLevel, reqOption, reqCause)                         
+                                isInSchool, schoolName, workGroup, jobLevel, reqOption, 
+                                reqCause)                         
         VALUES ('$IDNumber','$prefix', '$firstName', '$lastName', '$dateOfBirth', 
                 '$age', '$nationality', '$bloodGroup', '$regAddress', '$regZipCode', 
                 '$curAddress', '$curZipCode', '$phoneNumber', '$email', '$officerType', 
-                '$isInSchool', '$schoolName', '$jobLevel', '$reqOption', '$reqCause')";
+                '$isInSchool', '$schoolName', '$workGroup', '$jobLevel', '$reqOption', 
+                '$reqCause')";
     $dbquery = mysqli_query($connect,$sql);
 }
 ?>
@@ -96,7 +113,7 @@ if(isset($_POST["submit"])){
             </div>
             <div>
                 <label for="IDNumber">หมายเลขประจำตัวประชาชน:</label>
-                <input type="text" name="IDNumber" id="IDNumber" values="" placeholder="xxxxxxxxxxxxx" required/>
+                <input type="text" name="IDNumber" id="IDNumber" values="" minlength="13" maxlength="13" placeholder="X-XXXX-XXXXX-XX-X" required/>
             </div>
             <div>
                 <label for="nationality">สัญชาติ:</label>
@@ -117,7 +134,7 @@ if(isset($_POST["submit"])){
             <div>
                 <textarea type="text" row="5" column="40" name="regAddress" id="regAddress" values="" required></textarea><br>
             <label for="regZipCode">รหัสไปรษณีย์:</label>
-                <input type="text" name="regZipCode" id="regZipCode" values="" placeholder="xxxxx"required/>
+                <input type="text" name="regZipCode" id="regZipCode" values="" maxlength="5" placeholder="XXXXX" required/>
             </div>
             <br><hr class="lineGradient">
             <!------------------------------------------------------------------------------------------------->
@@ -136,16 +153,16 @@ if(isset($_POST["submit"])){
                 </svg>
             </div>
             <div>
-                <textarea type="text" row="5" column="40" name="curAddress" id="curAddress" values=""></textarea><br>
+                <textarea type="text" row="5" column="40" name="curAddress" id="curAddress"></textarea><br>
                 <label for="curZipCode">รหัสไปรษณีย์:</label>
-                <input type="text" name="curZipCode" id="curZipCode" values="" placeholder="xxxxx" required/>
+                <input type="text" name="curZipCode" id="curZipCode" maxlength="5" placeholder="XXXXX" required/>
             </div>
             <br>
             <div>
                 <label for="phoneNumber">หมายเลขโทรศัพท์:</label>
-                <input type="text" name="phoneNumber" id="phoneNumber" values="" placeholder="xxx xxx xxxx"required/>
+                <input type="text" name="phoneNumber" id="phoneNumber" values="" maxlength="10" placeholder="0X-XXXX-XXXX" required/>
                 <label for="email">Email:</label>
-                <input type="email" name="email" id="email" values="" placeholder="sample@email.com"required/>
+                <input type="email" name="email" id="email" values="" placeholder="sample@email.com" required/>
             </div>
             <br><hr class="lineGradient">
             <!------------------------------------------------------------------------------------------------->
@@ -156,14 +173,14 @@ if(isset($_POST["submit"])){
                     <label for="officerType">เจ้าหน้าที่รัฐประเภท:</label>
                     <select id="officerType" name="officerType" required>
                         <option default values="">ประเภท</option>
-                        <option value="govOfficer">ข้าราชการครูและบุคลากรทางการศึกษา</option>
-                        <option value="govEmployee">พนักงานราชการ</option>
-                        <option value="ftEmployee">ลูกจ้างประจำ</option>
+                        <option value="ข้าราชการครูและบุคลากรทางการศึกษา">ข้าราชการครูและบุคลากรทางการศึกษา</option>
+                        <option value="พนักงานราชการ">พนักงานราชการ</option>
+                        <option value="ลูกจ้างประจำ">ลูกจ้างประจำ</option>
                     </select>
                 </div><br>
                 <div>
                     <div class="checkbox-wrapper-4">
-                        <input class="inp-cbx" type="checkbox" id="isInSchool" name="isInSchool"/>
+                        <input class="inp-cbx" type="checkbox" id="isInSchool" name="isInSchool" value="1"/>
                         <label class="cbx" for="isInSchool"><span>
                         <svg width="12px" height="10px">
                             <use xlink:href="#check-4"></use>
@@ -184,13 +201,13 @@ if(isset($_POST["submit"])){
                     <label for="jobLevel">ระดับ:</label>
                     <select id="jobLevel" name="jobLevel" onchange="showFieldJobLevel(this.options[this.selectedIndex].value)" required>
                         <option default values="" >ระดับ</option>
-                        <option value=normal_1 >ทั่วไป-ปฏิบัติงาน</option>
-                        <option value=normal_2 >ทั่วไป-ชำนาญงาน</option>
-                        <option value=normal_3 >ทั่วไป-อาวุโส</option>
-                        <option value=academic_1 >วิชาการ-ปฏิบัติการ</option>
-                     <option value=academic_2 >วิชาการ-ชำนาญการ</option>
-                        <option value=academic_3 >วิชาการ-ชำนาญการพิเศษ</option>
-                        <option value=academic_4 >วิชาการ-เชี่ยวชาญ</option>
+                        <option value="ทั่วไป-ปฏิบัติงาน" >ทั่วไป-ปฏิบัติงาน</option>
+                        <option value="ทั่วไป-ปฏิบัติงาน" >ทั่วไป-ชำนาญงาน</option>
+                        <option value="ทั่วไป-อาวุโส" >ทั่วไป-อาวุโส</option>
+                        <option value="วิชาการ-ปฏิบัติการ" >วิชาการ-ปฏิบัติการ</option>
+                        <option value="วิชาการ-ชำนาญการ" >วิชาการ-ชำนาญการ</option>
+                        <option value="วิชาการ-ชำนาญการพิเศษ" >วิชาการ-ชำนาญการพิเศษ</option>
+                        <option value="วิชาการ-เชี่ยวชาญ" >วิชาการ-เชี่ยวชาญ</option>
                         <option value=other >อื่น ๆ</option>
                     </select><span id="divJobLevelOther"></span>
                 </div>
@@ -201,9 +218,9 @@ if(isset($_POST["submit"])){
                 <label for="reqOption">กรณีขอบัตร:</label>
                 <select id="reqOption" name="reqOption" required>
                     <option default values="">กรณี</option>
-                    <option value="firstCard">ขอมีบัตรครั้งแรก</option>
-                    <option value="newCard">ขอมีบัตรใหม่</option>
-                    <option value="changeCard">ขอเปลี่ยนบัตร</option>
+                    <option value="ขอมีบัตรครั้งแรก">ขอมีบัตรครั้งแรก</option>
+                    <option value="ขอมีบัตรใหม่">ขอมีบัตรใหม่</option>
+                    <option value="ขอเปลี่ยนบัตร">ขอเปลี่ยนบัตร</option>
                 </select>
                 <div>
                     <label for="reqCause">สาเหตุการขอใหม่:</label>
@@ -262,7 +279,61 @@ if(isset($_POST["submit"])){
 
 
 <script>
-/*
+
+//input filter 
+function setInputFilter(textbox, inputFilter, errMsg) {
+    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop", "focusout"].forEach(function(event) {
+      textbox.addEventListener(event, function(e) {
+        if (inputFilter(this.value)) {
+          // Accepted value
+          if (["keydown","mousedown","focusout"].indexOf(e.type) >= 0){
+            this.classList.remove("input-error");
+            this.setCustomValidity("");
+          }
+          this.oldValue = this.value;
+          this.oldSelectionStart = this.selectionStart;
+          this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+          // Rejected value - restore the previous one
+          this.classList.add("input-error");
+          this.setCustomValidity(errMsg);
+          this.reportValidity();
+          this.value = this.oldValue;
+          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        } else {
+          // Rejected value - nothing to restore
+          this.value = "";
+        }
+      });
+    });
+  }
+
+// Thai alphabet only  
+setInputFilter(document.getElementById("prefix"), function(value) {
+    return /^[\u0E00-\u0E7F]*$/gi.test(value); }, "กรอกเฉพาะตัวอักษรไทยเท่านั้น");
+setInputFilter(document.getElementById("firstName"), function(value) {
+    return /^[\u0E00-\u0E7F]*$/gi.test(value); }, "กรอกเฉพาะตัวอักษรไทยเท่านั้น");
+setInputFilter(document.getElementById("lastName"), function(value) {
+    return /^[\u0E00-\u0E7F]*$/gi.test(value); }, "กรอกเฉพาะตัวอักษรไทยเท่านั้น");
+setInputFilter(document.getElementById("nationality"), function(value) {
+    return /^[\u0E00-\u0E7F]*$/gi.test(value); }, "กรอกเฉพาะตัวอักษรไทยเท่านั้น");
+
+// Number only
+setInputFilter(document.getElementById("IDNumber"), function(value) {
+    return /^-?\d*$/.test(value); }, "กรอกเฉพาะตัวเลขเท่านั้น");
+setInputFilter(document.getElementById("phoneNumber"), function(value) {
+    return /^-?\d*$/.test(value); }, "กรอกเฉพาะตัวเลขเท่านั้น");
+setInputFilter(document.getElementById("regZipCode"), function(value) {
+    return /^-?\d*$/.test(value); }, "กรอกเฉพาะตัวเลขเท่านั้น");
+setInputFilter(document.getElementById("curZipCode"), function(value) {
+    return /^-?\d*$/.test(value); }, "กรอกเฉพาะตัวเลขเท่านั้น");
+
+// email validation
+/*setInputFilter(document.getElementById("email"), function(value) {
+    return /^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]*$/.test(value); }, "กรอกเฉพาะอักษรภาษาอังกฤษ ตัวเลข และอักขระพิเศษเท่านั้น");*/
+
+
+    /*
 //new popup   
 document.querySelector('#btnChangeBg').addEventListener('click', () => {
     Confirm.open({
@@ -288,7 +359,7 @@ document.getElementById("useSameAddress").onchange = function() {
 
 //this function use for "SHOW" input box when select the other choice.
 function showFieldJobLevel(choice){
-    if(choice == 'other')document.getElementById("divJobLevelOther").innerHTML=' ระบุระดับ: <input type="text" name="jobLevelOther" id="jobLevelOther" required>';
+    if(choice == 'other')document.getElementById("divJobLevelOther").innerHTML=' ระบุระดับ: <input type="text" name="jobLevel" id="jobLevelOther" required>';
     else document.getElementById('divJobLevelOther').innerHTML='';
 }
 
@@ -320,6 +391,7 @@ function cwrite(str,title) {
     ce.prepend(sg);
     if(ce.children("p").length>6) ce.children("p").first().remove();
 }*/
+
 /*
 // function for open and close the SUCCESSFUL dialog popup
 document.getElementById("open-popup-btn").addEventListener("click", function(){
@@ -339,10 +411,11 @@ function goto_page(des){
 	if(des==0){
 		callfrm("?option=form_inserting");   // submitte and return to card request menu
 	}else if(des==1){
-		callfrm("?option=card_request");   
+		callfrm("smss_10000001");   
 	}
 }
-/*
+
+
 function Confirm(title, msg, $true, $false, $link) { //change
     var $content =  "<div class='dialog-ovelay'>" +
                     "<div class='dialog'><header>" +
@@ -377,5 +450,5 @@ $('.cancelAction, .fa-close').click(function () {
 $('a').click(function () {
     Confirm('Go to Google', 'Are you sure you want to visit Google', 'Yes', 'Cancel', "https://www.google.com.eg"); //change
 });
-*/
+
 </script>
