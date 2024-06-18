@@ -23,7 +23,6 @@
 
 <body>
   <div>this is just placeholder</div>
-  <button name="goRequest" value="ส่งคำร้อง"><a href='?option=card_request&task=main/newform'>ส่งคำร้อง</a></button>
 <div class="box">
   <div class="percent">
     <svg>
@@ -38,14 +37,3 @@
 </div>
 </body>
 </html>
-
-<script>
-  // function for redirect to another page
-function goto_page(des){
-	if(des==0){
-		callfrm("-");   // submitte and return to card request menu
-	}else if(des==1){
-		callfrm("?option=card_request&task=main/card_request");   
-	}
-}
-</script>

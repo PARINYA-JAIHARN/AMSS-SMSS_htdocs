@@ -67,14 +67,12 @@ if(isset($_POST["submit"])){
 
     if(isset($_POST["isInSchool"])){            // value depend on checkbox "isInSchool" is checked [1 = true, 0 = false]
         $isInSchool = "1";
-        $schoolName = $_POST["schoolName"];
-        $workGroup = $_POST["workGroup"];
     }else{
         $isInSchool = "0";
-        $schoolName = "";
-        $workGroup = "";
     }
 
+    $schoolName = $_POST["schoolName"];
+    $workGroup = $_POST["workGroup"];
     $jobLevel = $_POST["jobLevel"];
     $reqOption = $_POST["reqOption"];
     $reqCause = $_POST["reqCause"];
@@ -194,9 +192,9 @@ if(isset($_POST["submit"])){
                         </svg>
                     </div>
                     <label for="schoolName">โรงเรียน:</label>
-                    <input disabled type="text" name="schoolName" id="schoolName"  values="-" placeholder="ชื่อโรงเรียน"/>
+                    <input disabled type="text" name="schoolName" id="schoolName"  values="" placeholder="ชื่อโรงเรียน"/>
                     <label for="workGroup">สังกัดกลุ่ม:</label>
-                    <input disabled type="text" name="workGroup" id="workGroup" values="-" placeholder="กลุ่มงาน"/>
+                    <input disabled type="text" name="workGroup" id="workGroup" values="" placeholder="กลุ่มงาน"/>
                 </div><br>
 
                 <div>
@@ -231,7 +229,7 @@ if(isset($_POST["submit"])){
             </div>
 
             <div class='animation a6'><br>
-                <button class="submitButton" type="submit" id="submit" name="submit">ส่งข้อมูล</button>               
+                <button class="submitButton" type="submit" id="submit" name="submit" onclick="goto_page(1)">ส่งข้อมูล</button>               
             </div>
  
             <!--<div class='animation a6'><br>
@@ -411,14 +409,14 @@ document.getElementById("dismiss-popup-btn").addEventListener("click", function(
 // function for redirect to another page
 function goto_page(des){
 	if(des==0){
-		callfrm("-");   // submitte and return to card request menu
+		callfrm("?option=form_inserting");   // submitte and return to card request menu
 	}else if(des==1){
-		callfrm("?option=card_request&task=main/request_list");   
+		callfrm("smss_10000001");   
 	}
 }
 
 
-/*function Confirm(title, msg, $true, $false, $link) { //change
+function Confirm(title, msg, $true, $false, $link) { //change
     var $content =  "<div class='dialog-ovelay'>" +
                     "<div class='dialog'><header>" +
                      " <h3> " + title + " </h3> " +
@@ -451,6 +449,6 @@ $('.cancelAction, .fa-close').click(function () {
 }
 $('a').click(function () {
     Confirm('Go to Google', 'Are you sure you want to visit Google', 'Yes', 'Cancel', "https://www.google.com.eg"); //change
-});*/
+});
 
 </script>
