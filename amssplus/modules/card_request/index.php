@@ -1,6 +1,6 @@
 <?php
-if(isset($_GET['index'])){
-$index=$_GET['index'];
+if(isset($_REQUEST['index'])){
+$index=$_REQUEST['index'];
 }
 else{
 $index="";
@@ -8,11 +8,12 @@ $index="";
 
 //ผนวกเมนู
 if($_SESSION['user_os']=='mobile'){
-$module_menu_path="./modules/card_request/menu_mobile.php";
+$module_menu_path="./modules/$_REQUEST[option]/menu_mobile.php";
 }
 else{
-$module_menu_path="./modules/card_request/menu.php";
+$module_menu_path="./modules/$_REQUEST[option]/menu.php";
 }
+
 if(file_exists($module_menu_path)){
 require_once("$module_menu_path");
 }

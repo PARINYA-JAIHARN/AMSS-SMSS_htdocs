@@ -96,7 +96,7 @@ if(isset($_POST["submit"])){
 
 <body>
     <div class="container">
-        <h2>คำขอทำบัตรประจำตัวเจ้าหน้าที่ราชการ</h2>
+        <h2>คำขอทำบัตรประจำตัวเจ้าหน้าที่ราชการ SM เก่า</h2>
         <form id="card_request" method="POST">
             <h3>ข้อมูลพื้นฐาน</h3>
             <div>

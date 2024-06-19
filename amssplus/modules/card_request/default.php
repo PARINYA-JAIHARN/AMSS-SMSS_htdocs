@@ -1,5 +1,6 @@
 <?php
 	if($_SESSION['user_os']=='mobile'){
+	include("modules/card_request/main/newform.php");	
 	}
 	else{
 	echo "<br />";
