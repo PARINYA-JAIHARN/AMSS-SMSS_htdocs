@@ -163,8 +163,9 @@ $list2 ++ ;
 	</table>
 </div><HR>
 </body>
+
 <script language="JavaScript">
-<!--
+
 function selectall(){
 	for (var i=0;i<document.form1.elements.length;i++)
 	{
@@ -192,5 +193,4 @@ var check = "";
   }
 }
 </script>
-
 </html>

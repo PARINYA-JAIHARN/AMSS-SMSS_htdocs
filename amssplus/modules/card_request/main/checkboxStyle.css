@@ -29,6 +29,7 @@
     border-radius: 4px;
     transform: scale(1);
     border: 1px solid #cccfdb;
+    background-color: #fff;
     transition: all 0.2s ease;
     box-shadow: 0 1px 1px rgba(0,16,75,0.05);
   }

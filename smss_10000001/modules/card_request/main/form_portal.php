@@ -6,6 +6,6 @@ require_once "include/sync.php";
 $modules="card_request";
 $file="newform";
 
-echo "<iframe src='$url/modules/$modules/expand/index.php?file=$file&get_office=$office_code&sync=$sync&get_serv=$get_serv&get_person=$get_person&get_prename=$get_prename&get_name=$get_name&get_surname=$get_surname&position_code=$position_code&get_time=$get_time&get_status=$status&classlevel=$classlevel&module=$modules' height='700' width='100%'></iframe>";
+echo "<iframe src='$url/modules/$modules/expand/index.php?file=$file&get_office=$office_code&sync=$sync&get_serv=$get_serv&get_person=$get_person&get_prename=$get_prename&get_name=$get_name&get_surname=$get_surname&position_code=$position_code&get_time=$get_time&get_status=$status&classlevel=$classlevel&module=$modules' height='1650' width='99%'></iframe>";
 
 ?>

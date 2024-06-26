@@ -67,12 +67,14 @@ if(isset($_POST["submit"])){
 
     if(isset($_POST["isInSchool"])){            // value depend on checkbox "isInSchool" is checked [1 = true, 0 = false]
         $isInSchool = "1";
+        $schoolName = $_POST["schoolName"];
+        $workGroup = $_POST["workGroup"];
     }else{
         $isInSchool = "0";
+        $schoolName = "";
+        $workGroup = "";
     }
-
-    $schoolName = $_POST["schoolName"];
-    $workGroup = $_POST["workGroup"];
+    
     $jobLevel = $_POST["jobLevel"];
     $reqOption = $_POST["reqOption"];
     $reqCause = $_POST["reqCause"];
@@ -94,8 +96,8 @@ if(isset($_POST["submit"])){
 
 <body>
     <div class="container">
-        <h2>คำขอทำบัตรประจำตัวเจ้าหน้าที่ราชการ AMSS</h2>
         <form id="card_request" method="POST">
+         <h2>คำขอทำบัตรประจำตัวเจ้าหน้าที่ราชการ AMSS</h2>   
             <h3>ข้อมูลพื้นฐาน</h3>
             <div>
                 <label for="prefix" >คำนำหน้าชื่อ:</label>

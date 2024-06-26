@@ -1,99 +1,13 @@
-<!-- 
+/**
 Responsive HTML Table With Pure CSS - Web Design/UI Design
 
 Code written by:
-👨🏻‍⚕️ Coding Design (Jeet Saru)
+👨🏻‍⚕️ @Coding Design (Jeet Saru)
 
 > You can do whatever you want with the code. However if you love my content, you can **SUBSCRIBED** my YouTube Channel.
 
 🌎link: www.youtube.com/codingdesign 
-https://github.com/JeetSaru/Responsive-HTML-Table-With-Pure-CSS---Web-Design-UI-Design
- -->
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<meta http-equiv="Content-Language" content="th" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>รายการอนุมัติคำขอทำบัตร</title>
-    <link rel="stylesheet" type="text/css" href="table_2/table_2.css">
-    <link rel="stylesheet" href="thsarabunnew.css" type="text">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fontawesome.com/icons/pen-to-square?f=classic&s=solid">
-</head>
-
-<style>
-	<?php
-	include "table_2/table_2.css";
-    include "thsarabunnew.css";
-    
-    ?>
-</style>
-
-<body>
-    <main class="table" id="customers_table">
-        <section class="table__header">
-            <h1>รายการคำขอทำบัตร</h1>
-            <div class="input-group">
-                <input type="search" placeholder="ค้นหา...">
-                <!--<i class="fa-solid fa-magnifying-glass"></i>-->
-            </div>
-            <!--<div class="export__file">
-                <label for="export-file" class="export__file-btn" title="Export File"><i class="bi bi-box-arrow-down"></i>Export</label>
-                <input type="checkbox" id="export-file">
-                <div class="export__file-options">
-                    <label>Export As &nbsp; &#10140;</label>
-                    <label for="export-file" id="toPDF">PDF <img src="table_2/table_assets/pdf.png" alt=""></label>
-                    <label for="export-file" id="toJSON">JSON <img src="table_2/table_assets/json.png" alt=""></label>
-                    <label for="export-file" id="toCSV">CSV <img src="table_2/table_assets/csv.png" alt=""></label>
-                    <label for="export-file" id="toEXCEL">EXCEL <img src="table_2/table_assets/excel.png" alt=""></label>
-                </div>
-            </div>-->
-        </section>
-        <section class="table__body">
-            <table>
-                <thead>
-                    <tr>
-                        <th> ที่ <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> ชื่อ-สกุล <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> ประเภทเจ้าหน้าที่<span class="icon-arrow">&UpArrow;</span></th>
-                        <th> ระดับ <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> โทร. <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> วันที่ <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> สถานะ <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> ตรวจสอบ </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td> 1 </td>
-                        <td> Zinzu Chan Lee</td>
-                        <td> ข้าราชการครูและบุคลากรทางการศึกษา </td>
-                        <td> วิชาการ-ชำนาญการพิเศษ </td>
-                        <td> 0815290804 </td>
-                        <td> mm/dd/yyyy </td>
-                        <td>
-                            <p class="status delivered">สำเร็จ</p>
-                        </td>
-                        <td><a class="fa-solid fa-pen-to-square" style="font-size:large" href=""></a></td>
-                        
-                        
-                    </tr>
-                 </tbody>
-             </table>
-         </section>
-    </main>
-
-    <script src="table_2/table_2.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
-
-<script>
+*/
 
 const search = document.querySelector('.input-group input'),
     table_rows = document.querySelectorAll('tbody tr'),
@@ -156,7 +70,7 @@ const customers_table = document.querySelector('#customers_table');
 const toPDF = function (customers_table) {
     const html_code = `
     <!DOCTYPE html>
-    <link rel="stylesheet" type="text/css" href="table_2/table_2.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <main class="table" id="customers_table">${customers_table.innerHTML}</main>`;
 
     const new_window = window.open();
@@ -298,4 +212,3 @@ const downloadFile = function (data, fileType, fileName = '') {
     a.click();
     a.remove();
 }
-</script>
