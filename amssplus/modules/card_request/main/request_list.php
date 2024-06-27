@@ -92,6 +92,21 @@ https://github.com/JeetSaru/Responsive-HTML-Table-With-Pure-CSS---Web-Design-UI-
                 </div>
             </div>-->
         </section>
+        <!-- Start Pagination -->
+		<div class='pagination-container' >
+			<nav>
+				<ul class="pagination">
+                    <li data-page="prev" >
+                        <span> < <span class="sr-only">(current)</span></span>
+                    </li>
+                        <!--	Here the JS Function Will Add the Rows -->
+                    <li data-page="next" id="prev">
+                        <span> > <span class="sr-only">(current)</span></span>
+                    </li>
+				</ul>
+			</nav>
+		</div>
+        <!-- End of Container -->
         <section class="table__body">
             <table id="request_list" class="table table-striped table-class">
                 <thead>
@@ -136,7 +151,7 @@ https://github.com/JeetSaru/Responsive-HTML-Table-With-Pure-CSS---Web-Design-UI-
                     ?>
                     <tr>
                         <td> <?php echo $reqOrder ?> </td>
-                        <td> <?php echo $prefix; $firstName; $lastName;?> </td>
+                        <td> <?php echo $prefix; echo $firstName; echo '&nbsp'; echo $lastName ?> </td>
                         <td> <?php echo $officerType ?> </td>
                         <td> <?php echo $jobLevel ?> </td>
                         <td> <?php echo $phoneNumber ?> </td>
@@ -153,21 +168,7 @@ https://github.com/JeetSaru/Responsive-HTML-Table-With-Pure-CSS---Web-Design-UI-
                 </tbody>
             </table>
         </section>
-        <!-- Start Pagination -->
-		<div class='pagination-container' >
-			<nav>
-				<ul class="pagination">
-                    <li data-page="prev" >
-                        <span> < <span class="sr-only">(current)</span></span>
-                    </li>
-                        <!--	Here the JS Function Will Add the Rows -->
-                    <li data-page="next" id="prev">
-                        <span> > <span class="sr-only">(current)</span></span>
-                    </li>
-				</ul>
-			</nav>
-		</div>
-        <!-- End of Container -->
+        
     </main>
 
     <script src="table_2/table_2.js"></script>

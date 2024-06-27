@@ -89,7 +89,7 @@ main.table {
 }
 
 .table__body {
-    width: 95%;
+    width: 100%;
     max-height: calc(89% - 1.6rem);
     background-color: #fffb;
 
@@ -121,7 +121,7 @@ table {
     margin-bottom: 20px;
 }
 
-td img {
+table td img {
     width: 36px;
     height: 36px;
     margin-right: .5rem;
@@ -129,12 +129,12 @@ td img {
 
     vertical-align: middle;
 }
-td a {
+table td a {
     color:#07f;
     text-decoration: none;
 }
 
-table, th, td {
+table th, td {
     border-collapse: collapse;
     font-family: 'Sarabun', sans-serif; 
 }
