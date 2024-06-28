@@ -20,19 +20,15 @@ exit();
 require_once "modules/card_request/time_inc.php";	
 $user=$_SESSION['login_user_id'];
 
-$sql = "SELECT * FROM card_request ORDER BY reqOrder";
-$dbquery = mysqli_query($connect,$sql);
-While ($result = mysqli_fetch_array($dbquery)){
-    $reqOrder = $result['reqOrder'];
-    $prefix = $result['prefix'];
-    $firstName = $result['firstName'];
-    $lastName = $result['lastName'];
-    $officerType = $result['officerType'];
-    $jobLevel = $result['jobLevel'];
-    $phoneNumber = $result['phoneNumber'];
-    $requestDate = '##/##/####';
-    $status = 'wait';
+// Pagination
+$rowPerPage = 5;
+if (isset($_GET['page'])){
+    $page = $_GET['page'];
+} 
+else {
+    $page = 1;
 }
+$startPage = ($page-1)*$rowPerPage; 
 ?>
 
 <!--
@@ -69,74 +65,27 @@ https://github.com/JeetSaru/Responsive-HTML-Table-With-Pure-CSS---Web-Design-UI-
             <h1>รายการคำขอทำบัตร</h1>
             <div class="input-group">
                 <input type="search" placeholder="ค้นหา...">
-                <!--<i class="fa-solid fa-magnifying-glass"></i>-->
+                <!--<a class="fa-solid fa-magnifying-glass"></a>-->
             </div>
-            <div class="form-group"> 	<!--		Show Numbers Of Rows 		-->
-			 	<select class  ="form-control" name="state" id="maxRows">
-					<option value="10">10/page</option>
-					<option value="20">20/page</option>
-					<option value="50">50/page</option>
-					<option value="100">100/page</option>
-                    <option value="5000">แสดงทั้งหมด</option>
-				</select>	
-			</div>
-            <!--<div class="export__file">
-                <label for="export-file" class="export__file-btn" title="Export File"><i class="bi bi-box-arrow-down"></i>Export</label>
-                <input type="checkbox" id="export-file">
-                <div class="export__file-options">
-                    <label>Export As &nbsp; &#10140;</label>
-                    <label for="export-file" id="toPDF">PDF <img src="table_2/table_assets/pdf.png" alt=""></label>
-                    <label for="export-file" id="toJSON">JSON <img src="table_2/table_assets/json.png" alt=""></label>
-                    <label for="export-file" id="toCSV">CSV <img src="table_2/table_assets/csv.png" alt=""></label>
-                    <label for="export-file" id="toEXCEL">EXCEL <img src="table_2/table_assets/excel.png" alt=""></label>
-                </div>
-            </div>-->
         </section>
-        <!-- Start Pagination -->
-		<div class='pagination-container' >
-			<nav>
-				<ul class="pagination">
-                    <li data-page="prev" >
-                        <span> < <span class="sr-only">(current)</span></span>
-                    </li>
-                        <!--	Here the JS Function Will Add the Rows -->
-                    <li data-page="next" id="prev">
-                        <span> > <span class="sr-only">(current)</span></span>
-                    </li>
-				</ul>
-			</nav>
-		</div>
-        <!-- End of Container -->
         <section class="table__body">
             <table id="request_list" class="table table-striped table-class">
                 <thead>
                     <tr>
-                        <th> ที่ <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> ชื่อ-สกุล <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> ประเภทเจ้าหน้าที่<span class="icon-arrow">&UpArrow;</span></th>
-                        <th> ระดับ <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> โทร. <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> วันที่ <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> สถานะ <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> ที่ </th>
+                        <th> ชื่อ-สกุล </th>
+                        <th> ประเภทเจ้าหน้าที่ </th>
+                        <th> ระดับ </th>
+                        <th> โทร. </th>
+                        <th> วันที่ </th>
+                        <th> สถานะ </th>
                         <th> ตรวจสอบ </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td> 1 </td>
-                        <td> Zinzu Chan Lee</td>
-                        <td> ข้าราชการครูและบุคลากรทางการศึกษา </td>
-                        <td> วิชาการ-ชำนาญการพิเศษ </td>
-                        <td> 0815290804 </td>
-                        <td> mm/dd/yyyy </td>
-                        <td>
-                            <p class="status delivered">สำเร็จ</p>
-                        </td>
-                        <td><a class="fa-solid fa-pen-to-square" style="font-size:large" href=""></a></td>
-                    </tr>
                     <!-- loop query from db to show in table-->
                     <?php
-                    $sql = "SELECT * FROM card_request ORDER BY reqOrder";
+                    $sql = "SELECT * FROM card_request ORDER BY reqOrder DESC LIMIT {$startPage}, {$rowPerPage}";
                     $dbquery = mysqli_query($connect,$sql);
                     While ($result = mysqli_fetch_array($dbquery)){
                         $reqOrder = $result['reqOrder'];
@@ -168,7 +117,40 @@ https://github.com/JeetSaru/Responsive-HTML-Table-With-Pure-CSS---Web-Design-UI-
                 </tbody>
             </table>
         </section>
+
+        <!-- page count -->
+        <?php
+        $sqlRowCount = "SELECT * FROM card_request";
+        $dbRowCount = mysqli_query($connect,$sqlRowCount);
+        $totalRow = mysqli_num_rows($dbRowCount);
+        $totalPages = ceil($totalRow / $rowPerPage);
+        ?>
+        <!-- Pagination -->
         
+            <ul class="pagination justify-content-center " >
+                <li class="page-item">
+                    <a class="page-link" href="index.php?option=card_request&task=main/request_list&page=1" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                
+                <?php
+                for ($i = 1; $i <= $totalPages; $i++){ ?>
+                    <li class="page-item"><a class="page-link" href="index.php?option=card_request&task=main/request_list&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+
+                <?php } ?>
+
+                <li class="page-item">
+                    <a class="page-link" href="index.php?option=card_request&task=main/request_list&page=<?php echo $totalPages; ?>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        
+        
+
     </main>
 
     <script src="table_2/table_2.js"></script>
@@ -203,7 +185,7 @@ function searchTable() {
 
 // 2. Sorting | Ordering data of HTML table
 
-table_headings.forEach((head, i) => {
+/*table_headings.forEach((head, i) => {
     let sort_asc = true;
     head.onclick = () => {
         table_headings.forEach(head => head.classList.remove('active'));
@@ -230,312 +212,73 @@ function sortTable(column, sort_asc) {
         return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
     })
         .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
-}
+}*/
 
-// 3. Converting HTML table to PDF
-
-const pdf_btn = document.querySelector('#toPDF');
-const customers_table = document.querySelector('#customers_table');
-
-
-const toPDF = function (customers_table) {
-    const html_code = `
-    <!DOCTYPE html>
-    <link rel="stylesheet" type="text/css" href="table_2/table_2.css">
-    <main class="table" id="customers_table">${customers_table.innerHTML}</main>`;
-
-    const new_window = window.open();
-     new_window.document.write(html_code);
-
-    setTimeout(() => {
-        new_window.print();
-        new_window.close();
-    }, 400);
-}
-
-pdf_btn.onclick = () => {
-    toPDF(customers_table);
-}
-
-// 4. Converting HTML table to JSON
-
-const json_btn = document.querySelector('#toJSON');
-
-const toJSON = function (table) {
-    let table_data = [],
-        t_head = [],
-
-        t_headings = table.querySelectorAll('th'),
-        t_rows = table.querySelectorAll('tbody tr');
-
-    for (let t_heading of t_headings) {
-        let actual_head = t_heading.textContent.trim().split(' ');
-
-        t_head.push(actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase());
-    }
-
-    t_rows.forEach(row => {
-        const row_object = {},
-            t_cells = row.querySelectorAll('td');
-
-        t_cells.forEach((t_cell, cell_index) => {
-            const img = t_cell.querySelector('img');
-            if (img) {
-                row_object['customer image'] = decodeURIComponent(img.src);
-            }
-            row_object[t_head[cell_index]] = t_cell.textContent.trim();
-        })
-        table_data.push(row_object);
-    })
-
-    return JSON.stringify(table_data, null, 4);
-}
-
-json_btn.onclick = () => {
-    const json = toJSON(customers_table);
-    downloadFile(json, 'json')
-}
-
-// 5. Converting HTML table to CSV File
-
-const csv_btn = document.querySelector('#toCSV');
-
-const toCSV = function (table) {
-    // Code For SIMPLE TABLE
-    // const t_rows = table.querySelectorAll('tr');
-    // return [...t_rows].map(row => {
-    //     const cells = row.querySelectorAll('th, td');
-    //     return [...cells].map(cell => cell.textContent.trim()).join(',');
-    // }).join('\n');
-
-    const t_heads = table.querySelectorAll('th'),
-        tbody_rows = table.querySelectorAll('tbody tr');
-
-    const headings = [...t_heads].map(head => {
-        let actual_head = head.textContent.trim().split(' ');
-        return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
-    }).join(',') + ',' + 'image name';
-
-    const table_data = [...tbody_rows].map(row => {
-        const cells = row.querySelectorAll('td'),
-            img = decodeURIComponent(row.querySelector('img').src),
-            data_without_img = [...cells].map(cell => cell.textContent.replace(/,/g, ".").trim()).join(',');
-
-        return data_without_img + ',' + img;
-    }).join('\n');
-
-    return headings + '\n' + table_data;
-}
-
-csv_btn.onclick = () => {
-    const csv = toCSV(customers_table);
-    downloadFile(csv, 'csv', 'customer orders');
-}
-
-// 6. Converting HTML table to EXCEL File
-
-const excel_btn = document.querySelector('#toEXCEL');
-
-const toExcel = function (table) {
-    // Code For SIMPLE TABLE
-    // const t_rows = table.querySelectorAll('tr');
-    // return [...t_rows].map(row => {
-    //     const cells = row.querySelectorAll('th, td');
-    //     return [...cells].map(cell => cell.textContent.trim()).join('\t');
-    // }).join('\n');
-
-    const t_heads = table.querySelectorAll('th'),
-        tbody_rows = table.querySelectorAll('tbody tr');
-
-    const headings = [...t_heads].map(head => {
-        let actual_head = head.textContent.trim().split(' ');
-        return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
-    }).join('\t') + '\t' + 'image name';
-
-    const table_data = [...tbody_rows].map(row => {
-        const cells = row.querySelectorAll('td'),
-            img = decodeURIComponent(row.querySelector('img').src),
-            data_without_img = [...cells].map(cell => cell.textContent.trim()).join('\t');
-
-        return data_without_img + '\t' + img;
-    }).join('\n');
-
-    return headings + '\n' + table_data;
-}
-
-excel_btn.onclick = () => {
-    const excel = toExcel(customers_table);
-    downloadFile(excel, 'excel');
-}
-
-const downloadFile = function (data, fileType, fileName = '') {
-    const a = document.createElement('a');
-    a.download = fileName;
-    const mime_types = {
-        'json': 'application/json',
-        'csv': 'text/csv',
-        'excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    }
-    a.href = `
-        data:${mime_types[fileType]};charset=utf-8,${encodeURIComponent(data)}
-    `;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-}
 
 // Pagination 
-// https://codepen.io/yasser-mas/pen/pyWPJd
-getPagination('request_list');
-					//getPagination('.table-class');
-					//getPagination('table');
+let currentPage = 1;
+let rowsPerPage = <?php echo $rowPerPage ?>;
+let totalPages = <?php echo $totalPages ?>;
+const pageNumbers = document.getElementById("pageNumbers");
 
-		  /*					PAGINATION 
-		  - on change max rows select options fade out all rows gt option value mx = 5
-		  - append pagination list as per numbers of rows / max rows option (20row/5= 4pages )
-		  - each pagination li on click -> fade out all tr gt max rows * li num and (5*pagenum 2 = 10 rows)
-		  - fade out all tr lt max rows * li num - max rows ((5*pagenum 2 = 10) - 5)
-		  - fade in all tr between (maxRows*PageNum) and (maxRows*pageNum)- MaxRows 
-		  */
-		 
+function paginateTable() {
+    let table = document.getElementById("myTable");
+    let rows = Array.from(table.rows).slice(1);
+    totalPages = Math.ceil(rows.length/rowsPerPage);
 
-function getPagination(table) {
-  var lastPage = 1;
+    rows.forEach(row=>row.style.display="none");
 
-  $('#maxRows')
-    .on('change', function(evt) {
-      //$('.paginationprev').html('');						// reset pagination
+    let start = (currentPage - 1) * rowsPerPage;
+    let end = start + rowsPerPage;
+    rows.slice(start,end).forEach(row=>row.style.display = "");
+    pageNumbers.innerHTML = "";
+    createPageLink("<<",1);
+    createPageLink("<",currentPage-1);
 
-     lastPage = 1;
-      $('.pagination')
-        .find('li')
-        .slice(1, -1)
-        .remove();
-      var trnum = 0; // reset tr counter
-      var maxRows = parseInt($(this).val()); // get Max Rows from select option
+    let startPageNumber = currentPage < 5 ? 1 : (currentPage>totalPages-2?totalPages-4 : currentPage-2);
+    let endPageNumber =totalPages<5 ? totalPages : (currentPage<=totalPages -2 ? startPageNumber+4 : totalPages);
+    for (let i=startPageNumber;i<=endPageNumber;i++) {
+        createPageLink(i,i);
+    }
+    createPageLink(">",currentPage+1);
+    createPageLink(">>",totalPages);
 
-      if (maxRows == 5000) {
-        $('.pagination').hide();
-      } else {
-        $('.pagination').show();
-      }
+    setActivePageNumber();
+    from.innerHTML = (currentPage-1)*rowsPerPage+1;
+    to.innerHTML = currentPage === totalPages ? rows.length : (currentPage)*rowsPerPage;
+    totalTableEntries.innerHTML = rows.length;
 
-      var totalRows = $(table + ' tbody tr').length; // numbers of rows
-      $(table + ' tr:gt(0)').each(function() {
-        // each TR in  table and not the header
-        trnum++; // Start Counter
-        if (trnum > maxRows) {
-          // if tr number gt maxRows
-
-          $(this).hide(); // fade it out
-        }
-        if (trnum <= maxRows) {
-          $(this).show();
-        } // else fade in Important in case if it ..
-      }); //  was fade out to fade it in
-      if (totalRows > maxRows) {
-        // if tr total rows gt max rows option
-        var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
-        //	numbers of pages
-        for (var i = 1; i <= pagenum; ) {
-          // for each page append pagination li
-          $('.pagination #prev')
-            .before(
-              '<li data-page="' +
-                i +
-                '">\
-								  <span>' +
-                i++ +
-                '<span class="sr-only">(current)</span></span>\
-								</li>'
-            )
-            .show();
-        } // end for i
-      } // end if row count > max rows
-      $('.pagination [data-page="1"]').addClass('active'); // add active class to the first li
-      $('.pagination li').on('click', function(evt) {
-        // on click each page
-        evt.stopImmediatePropagation();
-        evt.preventDefault();
-        var pageNum = $(this).attr('data-page'); // get it's number
-
-        var maxRows = parseInt($('#maxRows').val()); // get Max Rows from select option
-
-        if (pageNum == 'prev') {
-          if (lastPage == 1) {
-            return;
-          }
-          pageNum = --lastPage;
-        }
-        if (pageNum == 'next') {
-          if (lastPage == $('.pagination li').length - 2) {
-            return;
-          }
-          pageNum = ++lastPage;
-        }
-
-        lastPage = pageNum;
-        var trIndex = 0; // reset tr counter
-        $('.pagination li').removeClass('active'); // remove active class from all li
-        $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
-        // $(this).addClass('active');					// add active class to the clicked
-	  	limitPagging();
-        $(table + ' tr:gt(0)').each(function() {
-          // each tr in table not the header
-          trIndex++; // tr index counter
-          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
-          if (
-            trIndex > maxRows * pageNum ||
-            trIndex <= maxRows * pageNum - maxRows
-          ) {
-            $(this).hide();
-          } else {
-            $(this).show();
-          } //else fade in
-        }); // end of for each tr in table
-      }); // end of on click pagination list
-	  limitPagging();
-    })
-    .val(5)
-    .change();
-
-  // end of on select change
-
-  // END OF PAGINATION
 }
 
-function limitPagging(){
-	// alert($('.pagination li').length)
+paginateTable();
 
-	if($('.pagination li').length > 7 ){
-			if( $('.pagination li.active').attr('data-page') <= 3 ){
-			$('.pagination li:gt(5)').hide();
-			$('.pagination li:lt(5)').show();
-			$('.pagination [data-page="next"]').show();
-		}if ($('.pagination li.active').attr('data-page') > 3){
-			$('.pagination li:gt(0)').hide();
-			$('.pagination [data-page="next"]').show();
-			for( let i = ( parseInt($('.pagination li.active').attr('data-page'))  -2 )  ; i <= ( parseInt($('.pagination li.active').attr('data-page'))  + 2 ) ; i++ ){
-				$('.pagination [data-page="'+i+'"]').show();
-
-			}
-
-		}
-	}
+function changePage(e,pageNumber) {
+    if((pageNumber == 0)||(pageNumber==totalPages+1)) return;
+    e.preventDefault();
+    currentPage = pageNumber;
+    pageNumberInput.value = "";
+    paginateTable();
 }
 
-$(function() {
-  // Just to append id number for each row
-  $('table tr:eq(0)').prepend('<th> ID </th>');
+function setActivePageNumber() {
+    document.querySelectorAll("#pageNumbers a").forEach(a=>{
+        if(a.innerText == currentPage) {
+            a.classList.add("active");
+        }
+    });
+}
 
-  var id = 0;
+function createPageLink(linkText,pageNumber) {
+    let pageLink = document.createElement("a");
+    pageLink.href = "#";
+    pageLink.innerHTML = linkText;
+    pageLink.addEventListener("click",function(e){
+        changePage(e,pageNumber);
+    });
+    pageNumbers.appendChild(pageLink);
+}
 
-  $('table tr:gt(0)').each(function() {
-    id++;
-    $(this).prepend('<td>' + id + '</td>');
-  });
+goToPageButton.addEventListener("click",(e)=>{
+    changePage(e,pageNumberInput.value);
 });
-
-//  Developed By Yasser Mas
-// yasser.mas2@gmail.com
 </script>

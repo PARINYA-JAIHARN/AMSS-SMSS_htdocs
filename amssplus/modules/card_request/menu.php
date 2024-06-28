@@ -23,7 +23,7 @@ echo "<ul id='nav' class='dropdown dropdown-horizontal'>";
 		echo "<li><a href='?option=card_request&task=main/request_progress' class='dir'>$mpic1 ตรวจสอบคำขอ</a>";
 	echo "</li>";
 		echo "</li>";
-	echo "<li><a href='?option=card_request&task=main/request_list' class='dir'>$mpic1 อนุมัติคำขอ</a>";
+	echo "<li><a href='?option=card_request&task=main/request_list&page=1' class='dir'>$mpic1 อนุมัติคำขอ</a>";
 	}
 echo "</ul>";
 echo "</td></tr>";

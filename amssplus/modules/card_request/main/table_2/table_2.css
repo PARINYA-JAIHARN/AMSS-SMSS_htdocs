@@ -25,13 +25,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    /*background-image: url(table_assets/98797564_p0.jpg);*/
     background: linear-gradient(to right, #de48b5 0%,#0097ff 100%);
     font-family: 'Sarabun', sans-serif; 
 }
 
 main.table {
     width: 82vw;
-    height: 90vh;
+    height:max-content;
     background-color: #fff5;
 
     backdrop-filter: blur(7px);
@@ -56,7 +57,7 @@ main.table {
 
 .table__header .input-group {
     width: 35%;
-    height: 100%;
+    height: 40px;
     background-color: #fff5;
 
     padding: 0 .8rem;
@@ -155,6 +156,7 @@ thead th {
 tbody tr {
     --delay: .1s;
     transition: .5s ease-in-out var(--delay), background-color 0s;
+    vertical-align: middle;
 }
 
 tbody tr.hide {
@@ -175,7 +177,7 @@ tbody tr td img {
 tbody tr.hide td,
 tbody tr.hide td p {
     padding: 0;
-    font: 0 / 0 sans-serif;
+    font: 0 / 0 'Sarabun' sans-serif;
     transition: .2s ease-in-out .5s;
 }
 
@@ -186,11 +188,10 @@ tbody tr.hide td img {
 }
 
 .status {
-    padding: .3rem 0;
-    border-radius: 2rem;
+    padding: .2rem 0;
+    border-radius: .3rem;
     text-align: center;
-    margin: 5px auto;
-
+    margin: 0%;
 }
 
 .status.delivered {
@@ -253,85 +254,8 @@ thead th.active,tbody td.active {
     color: #6c00bd;
 }
 
-.export__file {
-    position: relative;
-}
-
-.export__file .export__file-btn {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    /*background: #fff6 url(table_2/table_assets/export.png) center / 80% no-repeat;*/
-    border-radius: 50%;
-    transition: .2s ease-in-out;
-    color: #6c00bd;
-}
-
-.export__file .export__file-btn:hover { 
-    background-color: #fff;
-    transform: scale(1.15);
-    cursor: pointer;
-}
-
-.export__file input {
-    display: none;
-}
-
-.export__file .export__file-options {
-    position: absolute;
-    right: 0;
-    
-    width: 12rem;
-    border-radius: .5rem;
-    overflow: hidden;
-    text-align: center;
-
-    opacity: 0;
-    transform: scale(.8);
-    transform-origin: top right;
-    
-    box-shadow: 0 .2rem .5rem #0004;
-    
-    transition: .2s;
-}
-
-.export__file input:checked + .export__file-options {
-    opacity: 1;
-    transform: scale(1);
-    z-index: 100;
-}
-
-.export__file .export__file-options label{
-    display: block;
-    width: 100%;
-    padding: .6rem 0;
-    background-color: #f2f2f2;
-    
-    display: flex;
-    justify-content: space-around;
+ul .pagination {
+    justify-content: center;
     align-items: center;
-
-    transition: .2s ease-in-out;
-}
-
-.export__file .export__file-options label:first-of-type{
-    padding: 1rem 0;
-    background-color: #86e49d !important;
-}
-
-.export__file .export__file-options label:hover{
-    transform: scale(1.05);
-    background-color: #fff;
-    cursor: pointer;
-}
-
-.export__file .export__file-options img{
-    width: 2rem;
-    height: auto;
-}
-
-/*Pagination*/
-
-.pagination li:hover{
-    cursor: pointer;
+    position: relative;
 }
