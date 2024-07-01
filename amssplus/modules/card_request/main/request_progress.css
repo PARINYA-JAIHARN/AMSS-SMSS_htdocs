@@ -1,0 +1,108 @@
+* {
+    font-family: 'Sarabun', sans-serif;
+}
+
+body{
+    background: linear-gradient(to right, #de48b5 0%,#0097ff 100%);
+    position: relative;
+    margin: 0;
+}
+
+.container{
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+
+    margin: 40px auto;
+    width: auto;
+    max-width: 700px;
+    height: auto;
+    padding-bottom: 50px;
+
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+    background-color: #ffffff;
+}
+
+.text-area{
+    position: relative;
+    top: 0;
+    padding: 40px;
+
+}
+
+.status-icon{
+    font-size: large;
+    text-align: center;
+    font-size: 80px;
+    padding: 20px;
+}
+
+.status-text {
+    font-size: 30px;
+    text-align: center;
+    margin: auto 40px;
+    
+}
+
+.description{
+    font-size: 20px;
+    text-align: center;
+    margin: auto 40px;
+    padding: 10px;
+}
+
+.in-progress{
+    color: #FFD600;
+}
+.success{
+    color: #00b578;
+}
+.no-request{
+    color: #ff3141;
+}
+
+.button-9 {
+    appearance: button;
+    backface-visibility: hidden;
+    background-color: #405cf5;
+    border-radius: 6px;
+    border-width: 0;
+    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 100%;
+    height: 44px;
+    line-height: 1.15;
+    margin: 20px 5px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transform: translateZ(0);
+    transition: all .2s,box-shadow .08s ease-in;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    
+  }
+  .alter{
+    color: #405cf5;
+    background-color: #fff;
+    border-color: #405cf5;
+    border-width: 1px;
+  }
+  
+  .button-9:disabled {
+    cursor: default;
+  }
+  
+  .button-9:focus {
+    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+  }

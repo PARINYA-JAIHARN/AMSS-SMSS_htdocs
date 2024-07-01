@@ -95,8 +95,8 @@ https://github.com/JeetSaru/Responsive-HTML-Table-With-Pure-CSS---Web-Design-UI-
                         $officerType = $result['officerType'];
                         $jobLevel = $result['jobLevel'];
                         $phoneNumber = $result['phoneNumber'];
-                        $requestDate = '##/##/####';
-                        $status = 'wait';
+                        $requestDate = $result['reqDate'];
+                        $status = $result['progress'];
                     ?>
                     <tr>
                         <td> <?php echo $reqOrder ?> </td>
@@ -106,7 +106,14 @@ https://github.com/JeetSaru/Responsive-HTML-Table-With-Pure-CSS---Web-Design-UI-
                         <td> <?php echo $phoneNumber ?> </td>
                         <td> <?php echo $requestDate ?> </td>
                         <td>
-                            <p class="status delivered"><?php echo $status ?></p>
+                            <?php if($status == 1) {?>
+                                <p class="status delivered">สำเร็จ</p>
+                            <?php
+                            } elseif($status == 0) {?>
+                                <p class="status pending">กำลังดำเนินการ</p>
+                            <?php
+                            }
+                            ?>
                         </td>
                         <td><a class="fa-solid fa-pen-to-square" style="font-size:large" href=""></a></td>
                     </tr>

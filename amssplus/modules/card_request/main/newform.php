@@ -78,18 +78,21 @@ if(isset($_POST["submit"])){
     $jobLevel = $_POST["jobLevel"];
     $reqOption = $_POST["reqOption"];
     $reqCause = $_POST["reqCause"];
+    $reqCause = $_POST["reqCause"];
+
+    $reqDate = date('Y-m-d H:i:s');
 
     // insert data
     $sql = "INSERT INTO card_request (IDNumber, prefix, firstName, lastName, dateOfBirth, 
                                 age, nationality, bloodGroup, regAddress, regZipCode, 
                                 curAddress, curZipCode, phoneNumber, email, officerType,
                                 isInSchool, schoolName, workGroup, jobLevel, reqOption, 
-                                reqCause)                         
+                                reqCause, progress, reqDate)                         
         VALUES ('$IDNumber','$prefix', '$firstName', '$lastName', '$dateOfBirth', 
                 '$age', '$nationality', '$bloodGroup', '$regAddress', '$regZipCode', 
                 '$curAddress', '$curZipCode', '$phoneNumber', '$email', '$officerType', 
                 '$isInSchool', '$schoolName', '$workGroup', '$jobLevel', '$reqOption', 
-                '$reqCause')";
+                '$reqCause','0', '$reqDate'";
     $dbquery = mysqli_query($connect,$sql);
 }
 ?>
